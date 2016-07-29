@@ -1,0 +1,83 @@
+#include "bistromathique.h"
+#include  <stdlib.h>
+
+
+int	valid_params(char *base, char *operators, char *expr, unsigned int size)
+{
+  return ( ( valid_opers(operators) ) && ( valid_expr_par(expr) ) );
+   //return (valid_opers(operators));
+}
+
+/*
+** Verifie la validite des operateurs passe en param
+** DONE
+*/USELESS
+/*nt	valid_opers(char *operators)
+{
+  while (*operators != '\0')
+    {
+      if (is_char_op(*operators) == OP_ELSE)
+	return (0);
+      if ((is_char_op(*operators) == OP_NUM))
+	return (0);
+      operators = operators + 1;
+    }
+  return (1);
+  }*/
+
+
+/* Retourne 0 si la chaine d'expression est non valide,1 si valide
+** chek le nombre de parentheses 
+** () (*  (/ (% ,  )6 )( ,+)  -) *) /) %)
+** EN COURS 
+***/
+  /* USELESS
+int				valid_expr_par(char *expr)
+{
+  while (*expr != '\0')
+    {
+      if (is_char_op(*expr) == OP_OPEN_PARENT_IDX)
+        {
+	  if (is_char_op(*(expr + 1)) == OP_CLOSE_PARENT_IDX)
+	    return (0);
+	  if ((is_char_op(*(expr + 1)) >= 4)  && (is_char_op(*(expr + 1)) <= 6))
+	    return (0);
+	}
+      if (is_char_op(*expr) == OP_CLOSE_PARENT_IDX)
+	{
+	  if (is_char_op(*(expr + 1)) == OP_NUM)
+	    return (0);
+	  if (is_char_op(*(expr + 1)) == OP_OPEN_PARENT_IDX)
+	    return (0);
+	}
+      if (is_char_op(*expr) == OP_NUM)
+	if (is_char_op(*(expr + 1)) == OP_OPEN_PARENT_IDX)
+	    return (0);
+      if ((is_char_op(*expr) >= 2)  && (is_char_op(*expr) <= 6))
+	if (is_char_op(*(expr + 1)) == OP_CLOSE_PARENT_IDX)
+	  return (0);
+      expr = expr + 1;
+    }
+  return (1);
+}
+
+/*
+** Check si pour chaque ( on a une )
+** DONE 
+*/
+int			valid_par_number(char *expr)
+{
+  int	cpt_par;
+
+  cpt_par = 0;
+  while (*expr != '\0')
+    {
+      if (is_char_op(*expr) == OP_OPEN_PARENT_IDX)
+	cpt_par = cpt_par + 1;
+      if (is_char_op(*expr) == OP_CLOSE_PARENT_IDX)
+	cpt_par = cpt_par - 1;
+      expr = expr + 1;
+    }
+  return (!cpt_par);
+}
+*/

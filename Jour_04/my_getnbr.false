@@ -1,0 +1,74 @@
+/*
+** my_getnbr.c for my_get_nbr in /u/all/sundas_c/cu/rendu/piscine/Jour_04
+** 
+** Made by christophe sundas
+** Login   <sundas_c@epitech.net>
+** 
+** Started on  Thu Oct  9 16:24:54 2008 christophe sundas
+** Last update Fri Oct 10 15:36:46 2008 christophe sundas
+*/
+
+int	my_strlen(char *str2);
+int	my_getnbr(char *str);
+int	clean_str(char *str); 
+
+int	my_getnbr(char *str)
+{
+  int	i;
+  int	j;
+  int	my_int;
+
+  j = 1;
+  my_int = 0;
+  str = str + clean_str(str);
+  i = my_strlen(str);
+  while (i > 0)
+    {
+      i = i - 1;  
+      if ((str[i] < '0') || (str[i] > '9'))
+	{
+	  my_int = 0;
+	  j = 1;
+	}
+      else 
+	{
+	  my_int = my_int + ( str[i] - '0') * j;
+	  j = j * 10;
+	}
+    }  
+  return (my_int);
+}
+
+int	clean_str(char *str)
+{
+  int	i;
+  int	cptmin;
+
+  i = 0;
+  cptmin = 0;
+  while ((str[i] == '+') || (str[i] == '-' ))
+    {
+      if (str[i] == '-')
+	{
+	  cptmin = cptmin + 1;
+	}
+      i = i + 1;
+   }
+  if ((cptmin % 2) != 0)
+    {
+      my_putchar('-');
+    }
+  return (i);
+}
+
+int     my_strlen(char *str2)
+{
+  int   i;
+
+  i = 0;
+  while (str2[i] != '\0')
+    {
+      i = i + 1;
+    }
+  return (i);
+}

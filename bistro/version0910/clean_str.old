@@ -1,0 +1,45 @@
+/*char    *cleanstr(char *base, char *expr, char  *operators, char *expr_in_tab)
+{
+  int   val;
+
+  val =  is_string_op(base,expr, operators,expr_in_tab);
+  if ((val == OP_OPEN_PARENT_IDX) || (val == OP_CLOSE_PARENT_IDX))
+    return (val);
+  if ((val == OP_MULT_IDX) || (val == OP_DIV_IDX) || (val == OP_MOD_IDX))
+    return (val);
+  else
+    {
+      return (clean_it(base, expr, operators, expr_in_tab));
+    }
+}
+char *clean_it(char *base, char *expr, char *operators, char *expr_in_tab)
+{
+  if ((my_strlen(expr_in_tab) == 1) || (is_nb_pure(base,operators, expr,expr_in_tab) ==1))
+    return (expr_in_tab);
+
+}
+*/
+
+/*                                                                                                                                                                                                           
+** Comme is_char_op mais sur une string                                                                                                                                                                      
+*//*
+int     is_string_op(char *base, char *operators, char *expr, char *expr_in_tab)
+{
+  if (is_open_parent(operators, expr_in_tab) == 1)
+    return (OP_OPEN_PARENT_IDX);
+  if (is_close_parent(operators, expr_in_tab) == 1)
+    return (OP_CLOSE_PARENT_IDX);
+  if (is_plus_op(expr_in_tab) == 1)
+    return (OP_PLUS_IDX);
+  if (is_sub_op(expr_in_tab) == 1)
+    return (OP_SUB_IDX);
+  if (is_mult_op(expr_in_tab) == 1)
+    return (OP_MULT_IDX);
+  if (is_div_op(expr_in_tab) == 1)
+    return (OP_DIV_IDX);
+  if (is_mod_op(OP_MOD_IDX) == 1)
+    return (OP_MOD_IDX);
+  if (is_pseudo_num(expr_in_tab) == 1)
+    return (OP_NUM);
+  return (OP_ELSE);
+  }*/

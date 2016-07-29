@@ -1,0 +1,81 @@
+#!/usr/bin/perl
+use File::stat;
+
+
+#sub	main()
+{
+    init();
+    open_master();
+    do_tests();
+}
+
+
+
+##
+##
+sub	init()
+{
+    $test_dir = "/u/all/lecoq_v/public/projs/ept1/calc/tests/cur";
+    $master_file_name = "${test_dir}/master";
+}
+sub	open_master()
+{
+    open(MASTER,"<$master_file_name") || die ("$master_file_name : $!\n");
+    printf("Start with $test_dir (master)\n\n");
+}
+
+sub	do_tests()
+{
+    my	$line;
+    my	$sum_time;
+    my  $fl_fail;
+
+    $fl_fail = $sum_time = 0;
+    while ($line=<MASTER>)
+    {
+	my	$test_name;
+	my	$test_coef;
+
+	chomp($line);
+	($test_name,$test_coef) = split(' ',$line);
+	$time += do_one_test($test_name,$test_coef);
+	printf(" %-10.10s: %d\n",$test_name,$time) if ( $res == 1);
+	printf("!%-10.10s: Failed\n",$test_name,$test_coef) if ( $res == 0);
+	exit(1) if ( $test_coef < 0 );
+	$sum_time += $time * $test_coef;
+	$fl_fail+=1 if ( $res == 0 && !($test_name =~ m/speed/) );
+    }
+    printf("\n");
+    printf("#faults     : %d\n",$fl_fail);
+    printf("sum_time    : %d\n",$sum_time);
+    system("echo $fl_fail >faults");
+    system("echo $sum_time >stime");
+}
+
+
+sub	do_one_test()
+{
+    my	($test_name,$test_coef) = @_;
+    my  $test_expr_file_name,$test_base_file_name,$test_result_file_name;
+    my  $cmd;
+    my	$r,$exp;
+
+    $test_expr_file_name = $test_dir."/".$test_name.".expr";
+    $test_base_file_name = $test_dir."/".$test_name.".base";
+    $test_result_file_name = $test_dir."/".$test_name.".r";
+    open(BASE,"$test_base_file_name") || die ("$test_base_file_name: $!\n");
+    $cmd = "/usr/bin/time -p ./calc '".<BASE>."'  '()+-*/%'  ".stat($test_expr_file_name)->size." < $test_expr_file_name > res.$test_name 2> time ; cp $test_result_file_name expected.$test_name";
+#    printf("%s\n",$cmd);
+    system($cmd);
+    open(TIME,"grep user time|")|| die "time : $!\n";
+    ($dum,$time) = split(' ',<TIME>);
+    open(RES,"<res.$test_name") || die "$test_result_file_name : $!\n";
+    open(COR,"<$test_result_file_name") || die "$test_result_file_name : $!\n";
+    $r = <RES>;
+    $exp = <COR>;
+    $res = 0;
+    $res = 1 if ( $r eq $exp );
+    close(BASE);
+    close(TIME);
+    return ($time*1000);
+}
